@@ -1,0 +1,25 @@
+{
+  "name": "pixi_test",
+  "version": "1.0.0",
+  "description": "Simple puzzle game powered by Pixi.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kolyose/Pixi_test.git"
+  },
+  "author": "Sergey Kolesnik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kolyose/Pixi_test/issues"
+  },
+  "homepage": "https://github.com/kolyose/Pixi_test#readme",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-preset-latest": "^6.22.0",
+    "webpack": "^2.2.1"
+  }
+}
