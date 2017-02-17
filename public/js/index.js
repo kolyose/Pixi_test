@@ -5,6 +5,9 @@ const app = new Application();
 document.body.appendChild(app.view);
 
 Loader.add('image', 'image.jpg').load((loader, resources) => {
+
+    let tink = new Tink(PIXI, app.view);
+
     const texture = resources.image.texture;
     Model.initLayoutSettingsByImageDimentions({width:texture.width, height:texture.height});    
    
@@ -14,9 +17,26 @@ Loader.add('image', 'image.jpg').load((loader, resources) => {
     let frameRect = new PIXI.Rectangle(0,0,fragmentDimentions.width, fragmentDimentions.height);
 
     texture.frame = frameRect;
-    const img = new Sprite(texture);   
+    let img = new Sprite(texture);   
+
+    tink.makeDraggable(img);
 
     img.scale.set(scale, scale);
-    app.stage.addChild(img);
+    app.stage.addChild(img);   
+
+
+    app.ticker.add(() => {
+        tink.update();
+        console.log("hello");
+    });
+
+   /* function gameLoop(){
+        console.log("hello");
+        requestAnimationFrame(gameLoop);
+        tink.update();
+        app.renderer.render(app.stage);
+    }
+
+    gameLoop();*/
 
 });
