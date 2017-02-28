@@ -1,5 +1,5 @@
 export default class BaseLayoutSettings{
-    constructor(imageDimentions){
-        this.imageDimentions = imageDimentions;
+    constructor(imageDimensions){
+        this.imageDimensions = imageDimensions;
     }
 }

@@ -1,35 +1,35 @@
 import BaseLayoutSettings from './BaseLayoutSettings';
 
 export default class VerticalLayoutSettings extends BaseLayoutSettings{
-    constructor(imageDimentions){
-        super(imageDimentions);
+    constructor(imageDimensions){
+        super(imageDimensions);
     }
 
-    getImageScaleByRendererDimentions(rendererDimentions){
-        return rendererDimentions.height/this.imageDimentions.height; 
+    getImageScaleByRendererDimensions(rendererDimensions){
+        return rendererDimensions.height/this.imageDimensions.height; 
     }
     
-    getFragmentDimentionsByFragmentsNumber(fragmentsNumber){
+    getFragmentDimensionsByFragmentsNumber(fragmentsNumber){
         let width, height;
         switch (fragmentsNumber){
             case 12:
             {
-                width = this.imageDimentions.width/3;
-                height = this.imageDimentions.height/4;
+                width = this.imageDimensions.width/3;
+                height = this.imageDimensions.height/4;
                 break;
             }
 
             case 20:
             {
-                width = this.imageDimentions.width/4;
-                height = this.imageDimentions.height/5;
+                width = this.imageDimensions.width/4;
+                height = this.imageDimensions.height/5;
                 break;
             }
 
             case 30:
             {
-                width = this.imageDimentions.width/5;
-                height = this.imageDimentions.height/6;
+                width = this.imageDimensions.width/5;
+                height = this.imageDimensions.height/6;
                 break;
             }
 

@@ -11,20 +11,20 @@ class Model{
     /*
     *    Factory method to init layout settings based on image dimentions
     */
-    initLayoutSettingsByImageDimentions(imageDimentions){
-        if (imageDimentions.width > imageDimentions.height){
-            this.layoutSettings = new HorizontalLayoutSettings(imageDimentions);
+    initLayoutSettingsByImageDimensions(imageDimensions){
+        if (imageDimensions.width > imageDimensions.height){
+            this.layoutSettings = new HorizontalLayoutSettings(imageDimensions);
             return;
         }
-        this.layoutSettings = new VerticalLayoutSettings(imageDimentions);
+        this.layoutSettings = new VerticalLayoutSettings(imageDimensions);
     }
 
-    getImageScaleByRendererDimentions(rendererDimentions){
-       return this.layoutSettings.getImageScaleByRendererDimentions(rendererDimentions);
+    getImageScaleByRendererDimensions(rendererDimensions){
+       return this.layoutSettings.getImageScaleByRendererDimentions(rendererDimensions);
     }
 
-    get fragmentDimentions(){        
-        return this.layoutSettings.getFragmentDimentionsByFragmentsNumber(this.fragmentsNumber);
+    get fragmentDimensions(){        
+        return this.layoutSettings.getFragmentDimensionsByFragmentsNumber(this.fragmentsNumber);
     }
 }
 

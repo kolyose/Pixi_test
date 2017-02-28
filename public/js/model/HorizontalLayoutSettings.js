@@ -1,35 +1,35 @@
 import BaseLayoutSettings from './BaseLayoutSettings';
 
 export default class HorizontalLayoutSettings extends BaseLayoutSettings{
-    constructor(imageDimentions){
-        super(imageDimentions);
+    constructor(imageDimensions){
+        super(imageDimensions);
     }
 
-    getImageScaleByRendererDimentions(rendererDimentions){
-        return rendererDimentions.width/this.imageDimentions.width; 
+    getImageScaleByRendererDimensions(rendererDimensions){
+        return rendererDimensions.width/this.imageDimensions.width; 
     }
 
-    getFragmentDimentionsByFragmentsNumber(fragmentsNumber){
+    getFragmentDimensionsByFragmentsNumber(fragmentsNumber){
         let width, height;
         switch (fragmentsNumber){
             case 12:
             {
-                width = this.imageDimentions.width/4;
-                height = this.imageDimentions.height/3;
+                width = this.imageDimensions.width/4;
+                height = this.imageDimensions.height/3;
                 break;
             }
 
             case 20:
             {
-                width = this.imageDimentions.width/5;
-                height = this.imageDimentions.height/4;
+                width = this.imageDimensions.width/5;
+                height = this.imageDimensions.height/4;
                 break;
             }
 
             case 30:
             {
-                width = this.imageDimentions.width/5;
-                height = this.imageDimentions.height/4;
+                width = this.imageDimensions.width/5;
+                height = this.imageDimensions.height/4;
                 break;
             }
 
