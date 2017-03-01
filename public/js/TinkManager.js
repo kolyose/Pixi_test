@@ -1,26 +1,29 @@
-export default class TinkManager{
-    /*constructor(){
-        this._tink;  
-        this._pointer;  
-    }*/
+import app from './app';
 
-    static init(pixi, view){
-        this._tink = new TinkManager(pixi, view);
-        this._pointer = this._tink.makePointer();       
+class TinkManager{
+    constructor(){
+        this._tink = new Tink(PIXI, app.view);
+        this._pointer = this._tink.makePointer(); 
+
+        app.ticker.add(() => {
+            this._tink.update();
+        });      
     }
 
-    static makeDraggable(sprite){
+    makeDraggable(sprite){
         if (!this._tink) throw new Error("TinkManager should be initialized first!")
         this._tink.makeDraggable(sprite);
     }
 
-    static makeUndraggable(sprite){
+    makeUndraggable(sprite){
         if (!this._tink) throw new Error("TinkManager should be initialized first!")
         this._tink.makeUndraggable(sprite);
     }
 
-    static get pointer(){
+    get pointer(){
         if (!this._pointer) throw new Error("TinkManager should be initialized first!")
         return this._pointer;
     }
 }
+
+export default new TinkManager();

@@ -1,14 +1,13 @@
-import {Application, Loader, Sprite} from './aliases';
+import {Loader, Sprite} from './aliases';
 import Model from './model/Model';
 import TinkManager from './TinkManager';
+import app from './app';
 
-const app = new Application();
-document.body.appendChild(app.view);
 
 Loader.add('image', 'image.jpg').load((loader, resources) => {
 
     //let tink = new Tink(PIXI, app.view);
-    TinkManager.init(PIXI, app.view);
+    TinkManager.init();
 
     const texture = resources.image.texture;
     Model.initLayoutSettingsByImageDimensions({width:texture.width, height:texture.height});    

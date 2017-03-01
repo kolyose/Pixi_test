@@ -2,7 +2,7 @@ import BaseFragmentState from './BaseFragmentState';
 import TinkManager from './../../TinkManager';
 import app from './../app';
 
-export default class FragmentStateDraggable extends BaseFragmentState{
+export default class FragmentStateDragged extends BaseFragmentState{
     constructor(fragment, statesFactory){
         super(fragment, statesFactory)
     }
@@ -17,7 +17,7 @@ export default class FragmentStateDraggable extends BaseFragmentState{
         });*/
     }
 
-    toggleDrag(){
-         fragment.applyState(new FragmentStateDragged(fragment, statesFactory));
+    toggleDragging(){
+         fragment.applyState(new FragmentStateDragging(fragment, statesFactory));
     }
 }

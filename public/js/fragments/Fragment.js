@@ -9,9 +9,13 @@ export default class Fragment{
 
     applyState(newState){
         if (this._state) 
-            mthis._state.exit();
+            this._state.exit();
         this._state = newState;
         this._state.entry();
+    }
+
+    toggleDrag(){
+        this._state.toggleDrag();
     }
 
     makeDraggable(){
