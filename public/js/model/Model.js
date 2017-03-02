@@ -11,20 +11,32 @@ class Model{
     /*
     *    Factory method to init layout settings based on image dimentions
     */
-    initLayoutSettingsByImageDimensions(imageDimensions){
+    initLayoutSettingsByImageDimensions(imageDimensions, rendererDimensions){
         if (imageDimensions.width > imageDimensions.height){
-            this.layoutSettings = new HorizontalLayoutSettings(imageDimensions);
+            this.layoutSettings = new HorizontalLayoutSettings(imageDimensions, rendererDimensions);
             return;
         }
-        this.layoutSettings = new VerticalLayoutSettings(imageDimensions);
+        this.layoutSettings = new VerticalLayoutSettings(imageDimensions, rendererDimensions);
     }
 
-    getImageScaleByRendererDimensions(rendererDimensions){
-       return this.layoutSettings.getImageScaleByRendererDimentions(rendererDimensions);
+    get scale(){
+        return this.layoutSettings.scale;
+    }
+
+    get rows(){
+        return this.layoutSettings.getRowsByFragmentsNumber(this.fragmentsNumber);
+    }
+
+    get columns(){
+        return this.layoutSettings.getColumnsByFragmentsNumber(this.fragmentsNumber);
     }
 
     get fragmentDimensions(){        
         return this.layoutSettings.getFragmentDimensionsByFragmentsNumber(this.fragmentsNumber);
+    }
+    
+    get anchorPrecision(){
+        return 10;
     }
 }
 

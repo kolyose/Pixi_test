@@ -1,5 +1,6 @@
 import BaseFragmentState from './BaseFragmentState';
 import TinkManager from './../../TinkManager';
+import FragmentStatesFactory from './FragmentStatesFactory';
 import app from './../app';
 
 export default class FragmentStateDraggable extends BaseFragmentState{
@@ -9,15 +10,10 @@ export default class FragmentStateDraggable extends BaseFragmentState{
 
     entry(){
         super.entry();
-
-        /*app.ticker.add(() => {
-            if (TinkManager.pointer.isDown && TinkManager.pointer.hitTestSprite(fragment.view)){
-                fragment.applyState(new FragmentStateDragging(fragment, statesFactory));
-            }
-        });*/
+        fragment.makeDraggable();
     }
 
     toggleDrag(){
-         fragment.applyState(new FragmentStateDragged(fragment, statesFactory));
+         fragment.applyState(FragmentStatesFactory.getStateDragged(fragment, statesFactory));
     }
 }

@@ -1,43 +1,45 @@
 import {Loader, Sprite} from './aliases';
 import Model from './model/Model';
 import TinkManager from './TinkManager';
+import FragmentsFactory from './fragments/FragmentsFactory';
 import app from './app';
 
 
 Loader.add('image', 'image.jpg').load((loader, resources) => {
 
-    //let tink = new Tink(PIXI, app.view);
-    TinkManager.init();
+    const texture = resources.image.texture;            
+    const scale = Model.scale;
 
-    const texture = resources.image.texture;
-    Model.initLayoutSettingsByImageDimensions({width:texture.width, height:texture.height});    
-   
-    const scale=Model.getImageScaleByRendererDimensions({width:app.renderer.width, height: app.renderer.height});
-    
-    const fragmentDimensions = Model.fragmentDimensions;
-    let frameRect = new PIXI.Rectangle(0,0,fragmentDimensions.width, fragmentDimensions.height);
+    Model.initLayoutSettingsByImageDimensions(
+        {width:texture.width, height:texture.height},
+        {width:app.renderer.width, height: app.renderer.height}
+    );    
 
-    texture.frame = frameRect;
-    let img = new Sprite(texture);   
+    const bg = new Sprite(texture);
+    bg.scale.set(scale);
+    app.stage.addChild(bg);   
 
-    tink.makeDraggable(img);
+    const fragments = FragmentsFactory.getFragmentsForTexture(texture);
+    fragments.forEach((fragment) => {
+        fragment.view.scale.set(scale, scale);
+        fragment.view.x = Math.random() * 500;
+        fragment.view.y = Math.random() * 500;
+        app.stage.addChild(fragment.view);   
+    });
 
-    img.scale.set(scale, scale);
-    app.stage.addChild(img);   
-
-
+    /*
     app.ticker.add(() => {
         tink.update();
         console.log("hello");
     });
 
-   /* function gameLoop(){
+    function gameLoop(){
         console.log("hello");
         requestAnimationFrame(gameLoop);
         tink.update();
         app.renderer.render(app.stage);
     }
-
-    gameLoop();*/
+    gameLoop();
+    */
 
 });

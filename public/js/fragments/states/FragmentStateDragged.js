@@ -1,5 +1,7 @@
 import BaseFragmentState from './BaseFragmentState';
 import TinkManager from './../../TinkManager';
+import Model from './../../model/Model';
+import FragmentStatesFactory from './FragmentStatesFactory';
 import app from './../app';
 
 export default class FragmentStateDragged extends BaseFragmentState{
@@ -9,15 +11,25 @@ export default class FragmentStateDragged extends BaseFragmentState{
 
     entry(){
         super.entry();
-
-        /*app.ticker.add(() => {
-            if (TinkManager.pointer.isDown && TinkManager.pointer.hitTestSprite(fragment.view)){
-                fragment.applyState(new FragmentStateDragging(fragment, statesFactory));
-            }
-        });*/
+        app.ticker.add(_checkPosition);
     }
 
-    toggleDragging(){
-         fragment.applyState(new FragmentStateDragging(fragment, statesFactory));
+    exit(){
+        super.exit();
+        app.ticker.remove(_checkPosition);
+    }
+
+    toggleDrag(){
+         fragment.applyState(FragmentStatesFactory.getStateDraggable(fragment, statesFactory));
+    }
+
+    _checkPosition(){
+        if (Math.abs(fragment.view.x - fragment.anchorPosition.x) > Model.anchorPrecision)
+            return;
+
+        if (Math.abs(fragment.view.y - fragment.anchorPosition.y) > Model.anchorPrecision)
+            return;   
+
+        fragment.applyState(FragmentStatesFactory.getStateAnchored(fragment, statesFactory));
     }
 }

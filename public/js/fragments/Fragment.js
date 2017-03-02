@@ -2,8 +2,9 @@ import {Sprite} from './../aliases';
 import TinkManager from './../TinkManager';
 
 export default class Fragment{
-    constructor(texture){
+    constructor(texture, anchorPosition){
         this._sprite = new Sprite(texture);
+        this.anchorPosition = anchorPosition;
         this._state;
     }
 
@@ -24,6 +25,14 @@ export default class Fragment{
 
     makeUndraggable(){
         TinkManager.makeUndraggable(this._sprite);
+    }
+
+    set anchorPosition(pos){
+        this._anchorPosition = pos;
+    }
+
+    get anchorPosition(){
+        return this._anchorPosition;
     }
 
     get view(){
