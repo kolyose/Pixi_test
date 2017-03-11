@@ -1,9 +1,12 @@
 import TinkManager from './../TinkManager';
+import {EventEmitter} from './../aliases';
+import {EVENT_FRAGMENT_ANCHORED, EVENT_ALL_FRAGMENTS_ANCHORED} from './../events';
 
-class FragmentsManager{
+class FragmentsManager extends EventEmitter{
     constructor(){
         this._fragments;
         this._draggingFragment;
+        this._anchoredFragments=0;
 
         TinkManager.pointer.press = () => {
             if (!this.fragments || !this.fragments.length) return;
@@ -34,6 +37,19 @@ class FragmentsManager{
 
     get fragments(){
         return this._fragments;
+    }
+
+    subscribe(){
+        this.fragments.forEach(fragment => {
+            fragment.once(EVENT_FRAGMENT_ANCHORED, this._fragmentAnchoredHandler);
+        });
+    }
+
+    _fragmentAnchoredHandler(){
+        this._anchoredFragments++;
+        if (this._anchoredFragments == this.fragments.length){
+            this.emit(EVENT_ALL_FRAGMENTS_ANCHORED);
+        }
     }
 }
 

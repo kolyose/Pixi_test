@@ -26,7 +26,7 @@ class FragmentsFactory{
         return new Fragment(texture, anchoredPosition);
     }
 
-    initFragment(fragment){
+    initFragment(fragment){  
         return fragment.applyState(FragmentStatesFactory.getStateDraggable(fragment));
     }
 }

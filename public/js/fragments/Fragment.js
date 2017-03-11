@@ -1,7 +1,8 @@
-import {Sprite} from './../aliases';
+import {Sprite, EventEmitter} from './../aliases';
 import TinkManager from './../TinkManager';
+import {EVENT_FRAGMENT_ANCHORED} from './../events';
 
-export default class Fragment{
+export default class Fragment extends EventEmitter{
     constructor(texture, anchorPosition){
         this._sprite = new Sprite(texture);
         this.anchorPosition = anchorPosition;
@@ -25,6 +26,10 @@ export default class Fragment{
 
     makeUndraggable(){
         TinkManager.makeUndraggable(this._sprite);
+    }
+
+    dispatchAnchored(){
+        this.emit(EVENT_FRAGMENT_ANCHORED);
     }
 
     set anchorPosition(pos){

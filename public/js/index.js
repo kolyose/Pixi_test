@@ -2,7 +2,9 @@ import {Loader, Sprite} from './aliases';
 import Model from './model/Model';
 import TinkManager from './TinkManager';
 import FragmentsFactory from './fragments/FragmentsFactory';
+import FragmentsManager from './fragments/FragmentsManager';
 import app from './app';
+import {EVENT_ALL_FRAGMENTS_ANCHORED} from './events';
 
 
 Loader.add('image', 'image.jpg').load((loader, resources) => {
@@ -26,6 +28,14 @@ Loader.add('image', 'image.jpg').load((loader, resources) => {
         fragment.view.y = Math.random() * 500;
         app.stage.addChild(fragment.view);   
     });
+
+    FragmentsManager.fragments = fragments;
+    FragmentsManager.subscribe();
+    FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, allFragmentsAnchoredHandler);
+
+    function allFragmentsAnchoredHandler(){
+        console.log("THE END");
+    }
 
     /*
     app.ticker.add(() => {
