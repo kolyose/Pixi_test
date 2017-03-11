@@ -30,6 +30,8 @@ export default class FragmentStateDragged extends BaseFragmentState{
         if (Math.abs(fragment.view.y - fragment.anchorPosition.y) > Model.anchorPrecision)
             return;   
 
+        fragment.view.x = fragment.anchorPosition.x;
+        fragment.view.y = fragment.anchorPosition.y;
         fragment.applyState(FragmentStatesFactory.getStateAnchored(fragment, statesFactory));
     }
 }

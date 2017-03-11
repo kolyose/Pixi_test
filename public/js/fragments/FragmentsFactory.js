@@ -9,14 +9,13 @@ class FragmentsFactory{
         const fragmentDimensions = Model.fragmentDimensions;
         const rows = Model.rows;
         const columns = Model.columns;
-        let fragmentPosition = {x:0, y:0};
 
         for (let i=0; i<rows; i++){
             for (let j=0; j<columns; j++){
-                let anchoredPosition = fragmentPosition;
-                let frameRect = new PIXI.Rectangle(j * fragmentDimensions.width, i * fragmentDimensions.height, fragmentDimensions.width, fragmentDimensions.height);
+                const anchorPosition = {x: j * fragmentDimensions.width, y: i * fragmentDimensions.height};
+                const frameRect = new PIXI.Rectangle(anchorPosition.x, anchorPosition.y, fragmentDimensions.width, fragmentDimensions.height);
                 texture.frame = frameRect;            
-                fragments.push(initFragment(createFragment(texture, anchoredPosition)));
+                fragments.push(initFragment(createFragment(texture, anchorPosition)));
             }            
         }
         
@@ -31,3 +30,5 @@ class FragmentsFactory{
         return fragment.applyState(FragmentStatesFactory.getStateDraggable(fragment));
     }
 }
+
+export default new FragmentsFactory();
