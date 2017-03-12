@@ -1,43 +1,42 @@
-import {Loader, Sprite} from './aliases';
-import Model from './model/Model';
-import TinkManager from './TinkManager';
-import FragmentsFactory from './fragments/FragmentsFactory';
-import FragmentsManager from './fragments/FragmentsManager';
-import app from './app';
-import {EVENT_ALL_FRAGMENTS_ANCHORED} from './events';
+import { Loader, Sprite } from "./aliases";
+import Model from "./model/Model";
+import FragmentsFactory from "./fragments/FragmentsFactory";
+import FragmentsManager from "./fragments/FragmentsManager";
+import app from "./app";
+import { EVENT_ALL_FRAGMENTS_ANCHORED } from "./events";
 
+Loader.add("image", "image.jpg").load((loader, resources) => {
+  const texture = resources.image.texture;
+  const scale = Model.scale;
 
-Loader.add('image', 'image.jpg').load((loader, resources) => {
+  Model.initLayoutSettingsByImageDimensions(
+    { width: texture.width, height: texture.height },
+    { width: app.renderer.width, height: app.renderer.height }
+  );
 
-    const texture = resources.image.texture;            
-    const scale = Model.scale;
+  const bg = new Sprite(texture);
+  bg.scale.set(scale);
+  app.stage.addChild(bg);
 
-    Model.initLayoutSettingsByImageDimensions(
-        {width:texture.width, height:texture.height},
-        {width:app.renderer.width, height: app.renderer.height}
-    );    
+  const fragments = FragmentsFactory.getFragmentsForTexture(texture);
+  fragments.forEach(fragment => {
+    fragment.view.scale.set(scale, scale);
+    fragment.view.x = Math.random() * 500;
+    fragment.view.y = Math.random() * 500;
+    app.stage.addChild(fragment.view);
+  });
 
-    const bg = new Sprite(texture);
-    bg.scale.set(scale);
-    app.stage.addChild(bg);   
+  FragmentsManager.fragments = fragments;
+  FragmentsManager.subscribe();
+  FragmentsManager.once(
+    EVENT_ALL_FRAGMENTS_ANCHORED,
+    allFragmentsAnchoredHandler
+  );
 
-    const fragments = FragmentsFactory.getFragmentsForTexture(texture);
-    fragments.forEach((fragment) => {
-        fragment.view.scale.set(scale, scale);
-        fragment.view.x = Math.random() * 500;
-        fragment.view.y = Math.random() * 500;
-        app.stage.addChild(fragment.view);   
-    });
-
-    FragmentsManager.fragments = fragments;
-    FragmentsManager.subscribe();
-    FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, allFragmentsAnchoredHandler);
-
-    function allFragmentsAnchoredHandler(){
-        console.log("THE END");
-    }
-
-    /*
+  function allFragmentsAnchoredHandler() {
+    console.log("THE END");
+  }
+  /*
     app.ticker.add(() => {
         tink.update();
         console.log("hello");
@@ -51,5 +50,4 @@ Loader.add('image', 'image.jpg').load((loader, resources) => {
     }
     gameLoop();
     */
-
 });

@@ -4,12 +4,10 @@
   "description": "Simple puzzle game powered by Pixi.js",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kolyose/Pixi_test.git"
-  },
+  "repository": "git+https://github.com/kolyose/Pixi_test.git",
   "author": "Sergey Kolesnik",
   "license": "ISC",
   "bugs": {
@@ -17,9 +15,31 @@
   },
   "homepage": "https://github.com/kolyose/Pixi_test#readme",
   "devDependencies": {
-    "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
-    "babel-preset-latest": "^6.22.0",
+    "eslint": "^3.17.1",
+    "eslint-config-airbnb-base": "^11.1.1",
+    "eslint-config-prettier": "^1.5.0",
+    "eslint-plugin-import": "^2.2.0",
     "webpack": "^2.2.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb-base",
+      "prettier"
+    ]
+  },
+  "dependencies": {
+    "babel-core": "^6.23.1",
+    "babel-preset-env": "^1.2.1"
+  },
+  "babel": {
+    "presets": [
+      "env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
   }
 }
