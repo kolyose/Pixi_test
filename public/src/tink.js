@@ -1,6 +1,6 @@
+/*eslint-disable*/
 class Tink {
   constructor(PIXI, element, scale = 1) {
-
     //Add element and scale properties
     this.element = element;
     this._scale = scale;
@@ -41,7 +41,6 @@ class Tink {
   //`makeDraggable` lets you make a drag-and-drop sprite by pushing it
   //into the `draggableSprites` array
   makeDraggable(...sprites) {
-
     //If the first argument isn't an array of sprites...
     if (!(sprites[0] instanceof Array)) {
       sprites.forEach(sprite => {
@@ -54,10 +53,8 @@ class Tink {
           sprite._localDraggableAllocation = true;
         }
       });
-    }
-
-    //If the first argument is an array of sprites...
-    else {
+    } else {
+      //If the first argument is an array of sprites...
       let spritesArray = sprites[0];
       if (spritesArray.length > 0) {
         for (let i = spritesArray.length - 1; i >= 0; i--) {
@@ -78,30 +75,30 @@ class Tink {
   //`makeUndraggable` removes the sprite from the `draggableSprites`
   //array
   makeUndraggable(...sprites) {
-
     //If the first argument isn't an array of sprites...
     if (!(sprites[0] instanceof Array)) {
       sprites.forEach(sprite => {
         this.draggableSprites.splice(this.draggableSprites.indexOf(sprite), 1);
         if (sprite._localDraggableAllocation === true) sprite.draggable = false;
       });
-    }
-
-    //If the first argument is an array of sprites
-    else {
+    } else {
+      //If the first argument is an array of sprites
       let spritesArray = sprites[0];
       if (spritesArray.length > 0) {
         for (let i = spritesArray.length - 1; i >= 0; i--) {
           let sprite = spritesArray[i];
-          this.draggableSprites.splice(this.draggableSprites.indexOf(sprite), 1);
-          if (sprite._localDraggableAllocation === true) sprite.draggable = false;
+          this.draggableSprites.splice(
+            this.draggableSprites.indexOf(sprite),
+            1
+          );
+          if (sprite._localDraggableAllocation === true)
+            sprite.draggable = false;
         }
       }
     }
   }
 
   makePointer(element = this.element, scale = this.scale) {
-
     //Get a reference to Tink's global `draggableSprites` array
     let draggableSprites = this.draggableSprites;
 
@@ -159,7 +156,7 @@ class Tink {
       },
 
       //Add a `cursor` getter/setter to change the pointer's cursor
-      //style. Values can be "pointer" (for a hand icon) or "auto" for 
+      //style. Values can be "pointer" (for a hand icon) or "auto" for
       //an ordinary arrow icon.
       get cursor() {
         return this.element.style.cursor;
@@ -206,16 +203,15 @@ class Tink {
 
       //The pointer's mouse `moveHandler`
       moveHandler(event) {
-
         //Get the element that's firing the event
         let element = event.target;
 
         //Find the pointer’s x and y position (for mouse).
         //Subtract the element's top and left offset from the browser window
-        this._x = (event.pageX - element.offsetLeft);
-        this._y = (event.pageY - element.offsetTop);
+        this._x = event.pageX - element.offsetLeft;
+        this._y = event.pageY - element.offsetTop;
 
-        //Prevent the event's default behavior 
+        //Prevent the event's default behavior
         event.preventDefault();
       },
 
@@ -224,14 +220,13 @@ class Tink {
         let element = event.target;
 
         //Find the touch point's x and y position
-        this._x = (event.targetTouches[0].pageX - element.offsetLeft);
-        this._y = (event.targetTouches[0].pageY - element.offsetTop);
+        this._x = event.targetTouches[0].pageX - element.offsetLeft;
+        this._y = event.targetTouches[0].pageY - element.offsetTop;
         event.preventDefault();
       },
 
       //The pointer's `downHandler`
       downHandler(event) {
-
         //Set the down states
         this.isDown = true;
         this.isUp = false;
@@ -268,7 +263,6 @@ class Tink {
 
       //The pointer's `upHandler`
       upHandler(event) {
-
         //Figure out how much time the pointer has been down
         this.elapsedTime = Math.abs(this.downTime - Date.now());
 
@@ -289,7 +283,6 @@ class Tink {
 
       //The pointer's `touchendHandler`
       touchendHandler(event) {
-
         //Figure out how much time the pointer has been down
         this.elapsedTime = Math.abs(this.downTime - Date.now());
 
@@ -310,7 +303,6 @@ class Tink {
 
       //`hitTestSprite` figures out if the pointer is touching a sprite
       hitTestSprite(sprite) {
-
         //Add global `gx` and `gy` properties to the sprite if they
         //don't already exist
         addGlobalPositionProperties(sprite);
@@ -331,7 +323,6 @@ class Tink {
 
         //Is the sprite rectangular?
         if (!sprite.circular) {
-
           //Get the position of the sprite's edges using global
           //coordinates
           let left = sprite.gx - xAnchorOffset,
@@ -342,15 +333,16 @@ class Tink {
           //Find out if the pointer is intersecting the rectangle.
           //`hit` will become `true` if the pointer is inside the
           //sprite's area
-          hit = this.x > left && this.x < right && this.y > top && this.y < bottom;
-        }
-
-        //Is the sprite circular?
-        else {
+          hit = this.x > left &&
+            this.x < right &&
+            this.y > top &&
+            this.y < bottom;
+        } else {
+          //Is the sprite circular?
           //Find the distance between the pointer and the
           //center of the circle
-          let vx = this.x - (sprite.gx + (sprite.width / 2) - xAnchorOffset),
-            vy = this.y - (sprite.gy + (sprite.width / 2) - yAnchorOffset),
+          let vx = this.x - (sprite.gx + sprite.width / 2 - xAnchorOffset),
+            vy = this.y - (sprite.gy + sprite.width / 2 - yAnchorOffset),
             distance = Math.sqrt(vx * vx + vy * vy);
 
           //The pointer is intersecting the circle if the
@@ -365,30 +357,38 @@ class Tink {
     //Bind the events to the handlers
     //Mouse events
     element.addEventListener(
-      "mousemove", pointer.moveHandler.bind(pointer), false
+      "mousemove",
+      pointer.moveHandler.bind(pointer),
+      false
     );
     element.addEventListener(
-      "mousedown", pointer.downHandler.bind(pointer), false
+      "mousedown",
+      pointer.downHandler.bind(pointer),
+      false
     );
 
     //Add the `mouseup` event to the `window` to
     //catch a mouse button release outside of the canvas area
-    window.addEventListener(
-      "mouseup", pointer.upHandler.bind(pointer), false
-    );
+    window.addEventListener("mouseup", pointer.upHandler.bind(pointer), false);
 
     //Touch events
     element.addEventListener(
-      "touchmove", pointer.touchmoveHandler.bind(pointer), false
+      "touchmove",
+      pointer.touchmoveHandler.bind(pointer),
+      false
     );
     element.addEventListener(
-      "touchstart", pointer.touchstartHandler.bind(pointer), false
+      "touchstart",
+      pointer.touchstartHandler.bind(pointer),
+      false
     );
 
     //Add the `touchend` event to the `window` object to
     //catch a mouse button release outside of the canvas area
     window.addEventListener(
-      "touchend", pointer.touchendHandler.bind(pointer), false
+      "touchend",
+      pointer.touchendHandler.bind(pointer),
+      false
     );
 
     //Disable the default pan and zoom actions on the `canvas`
@@ -407,32 +407,25 @@ class Tink {
   //that reference Pixi sprites' `getGlobalPosition()` values.
   addGlobalPositionProperties(sprite) {
     if (sprite.gx === undefined) {
-      Object.defineProperty(
-        sprite,
-        "gx", {
-          get() {
-            return sprite.getGlobalPosition().x;
-          }
+      Object.defineProperty(sprite, "gx", {
+        get() {
+          return sprite.getGlobalPosition().x;
         }
-      );
+      });
     }
 
     if (sprite.gy === undefined) {
-      Object.defineProperty(
-        sprite,
-        "gy", {
-          get() {
-            return sprite.getGlobalPosition().y;
-          }
+      Object.defineProperty(sprite, "gy", {
+        get() {
+          return sprite.getGlobalPosition().y;
         }
-      );
+      });
     }
   }
 
-  //A method that implments drag-and-drop functionality 
+  //A method that implments drag-and-drop functionality
   //for each pointer
   updateDragAndDrop(draggableSprites) {
-
     //Create a pointer if one doesn't already exist
     if (this.pointers.length === 0) {
       this.makePointer(this.element, this.scale);
@@ -441,26 +434,21 @@ class Tink {
     //Loop through all the pointers in Tink's global `pointers` array
     //(there will usually just be one, but you never know)
     this.pointers.forEach(pointer => {
-
       //Check whether the pointer is pressed down
       if (pointer.isDown) {
-
         //You need to capture the co-ordinates at which the pointer was
         //pressed down and find out if it's touching a sprite
 
         //Only run pointer.code if the pointer isn't already dragging
         //sprite
         if (pointer.dragSprite === null) {
-
           //Loop through the `draggableSprites` in reverse to start searching at the bottom of the stack
           for (let i = draggableSprites.length - 1; i > -1; i--) {
-
             //Get a reference to the current sprite
             let sprite = draggableSprites[i];
 
             //Check for a collision with the pointer using `hitTestSprite`
             if (pointer.hitTestSprite(sprite) && sprite.draggable) {
-
               //Calculate the difference between the pointer's
               //position and the sprite's position
               pointer.dragOffsetX = pointer.x - sprite.gx;
@@ -488,11 +476,9 @@ class Tink {
               break;
             }
           }
-        }
-
-        //If the pointer is down and it has a `dragSprite`, make the sprite follow the pointer's
-        //position, with the calculated offset
-        else {
+        } else {
+          //If the pointer is down and it has a `dragSprite`, make the sprite follow the pointer's
+          //position, with the calculated offset
           pointer.dragSprite.x = pointer.x - pointer.dragOffsetX;
           pointer.dragSprite.y = pointer.y - pointer.dragOffsetY;
         }
@@ -518,7 +504,6 @@ class Tink {
   }
 
   makeInteractive(o) {
-
     //The `press`,`release`, `over`, `out` and `tap` methods. They're `undefined`
     //for now, but they can be defined in the game program
     o.press = o.press || undefined;
@@ -545,7 +530,7 @@ class Tink {
     //has hovered over the sprite
     o.hoverOver = false;
 
-    //tinkType is a string that will be set to "button" if the 
+    //tinkType is a string that will be set to "button" if the
     //user creates an object using the `button` function
     o.tinkType = "";
 
@@ -558,10 +543,9 @@ class Tink {
     this.buttons.push(o);
   }
 
-  //The `updateButtons` method will be called each frame 
+  //The `updateButtons` method will be called each frame
   //inside the game loop. It updates all the button-like sprites
   updateButtons() {
-
     //Create a pointer if one doesn't already exist
     if (this.pointers.length === 0) {
       this.makePointer(this.element, this.scale);
@@ -570,20 +554,16 @@ class Tink {
     //Loop through all the button-like sprites that were created
     //using the `makeInteractive` method
     this.buttons.forEach(o => {
-
       //Only do this if the interactive object is enabled
       if (o.enabled) {
-
         //Loop through all of Tink's pointers (there will usually
         //just be one)
         this.pointers.forEach(pointer => {
-
           //Figure out if the pointer is touching the sprite
           let hit = pointer.hitTestSprite(o);
 
           //1. Figure out the current state
           if (pointer.isUp) {
-
             //Up state
             o.state = "up";
 
@@ -594,13 +574,14 @@ class Tink {
           //If the pointer is touching the sprite, figure out
           //if the over or down state should be displayed
           if (hit) {
-
             //Over state
             o.state = "over";
 
             //Show the second image state frame if this sprite has
             //3 frames and it's a `Button` sprite
-            if (o.totalFrames && o.totalFrames === 3 && o.tinkType === "button") {
+            if (
+              o.totalFrames && o.totalFrames === 3 && o.tinkType === "button"
+            ) {
               o.gotoAndStop(1);
             }
 
@@ -619,7 +600,6 @@ class Tink {
                 }
               }
             }
-
 
             //Change the pointer icon to a hand
             if (pointer.visible) pointer.cursor = "pointer";
@@ -684,34 +664,27 @@ class Tink {
   //A function that creates a sprite with 3 frames that
   //represent the button states: up, over and down
   button(source, x = 0, y = 0) {
-
     //The sprite object that will be returned
     let o;
 
     //Is it an array of frame ids or textures?
     if (typeof source[0] === "string") {
-
       //They're strings, but are they pre-existing texture or
       //paths to image files?
       //Check to see if the first element matches a texture in the
       //cache
       if (this.TextureCache[source[0]]) {
-
         //It does, so it's an array of frame ids
         o = this.AnimatedSprite.fromFrames(source);
       } else {
-
         //It's not already in the cache, so let's load it
         o = this.AnimatedSprite.fromImages(source);
       }
-    }
-
-    //If the `source` isn't an array of strings, check whether
-    //it's an array of textures
-    else if (source[0] instanceof this.Texture) {
-
-      //Yes, it's an array of textures. 
-      //Use them to make a AnimatedSprite o 
+    } else if (source[0] instanceof this.Texture) {
+      //If the `source` isn't an array of strings, check whether
+      //it's an array of textures
+      //Yes, it's an array of textures.
+      //Use them to make a AnimatedSprite o
       o = new this.AnimatedSprite(source);
     }
 
@@ -732,9 +705,9 @@ class Tink {
   //Run the `udpate` function in your game loop
   //to update all of Tink's interactive objects
   update() {
-
     //Update the drag and drop system
-    if (this.draggableSprites.length !== 0) this.updateDragAndDrop(this.draggableSprites);
+    if (this.draggableSprites.length !== 0)
+      this.updateDragAndDrop(this.draggableSprites);
 
     //Update the buttons and button-like interactive sprites
     if (this.buttons.length !== 0) this.updateButtons();
@@ -790,12 +763,8 @@ class Tink {
     };
 
     //Attach event listeners
-    window.addEventListener(
-      "keydown", key.downHandler.bind(key), false
-    );
-    window.addEventListener(
-      "keyup", key.upHandler.bind(key), false
-    );
+    window.addEventListener("keydown", key.downHandler.bind(key), false);
+    window.addEventListener("keyup", key.upHandler.bind(key), false);
 
     //Return the key object
     return key;
@@ -806,9 +775,10 @@ class Tink {
   //with the sprite you want to control and the speed per frame, in
   //pixels, that you want to update the sprite's velocity
   arrowControl(sprite, speed) {
-
     if (speed === undefined) {
-      throw new Error("Please supply the arrowControl method with the speed at which you want the sprite to move");
+      throw new Error(
+        "Please supply the arrowControl method with the speed at which you want the sprite to move"
+      );
     }
 
     let upArrow = this.keyboard(38),
@@ -824,7 +794,7 @@ class Tink {
     };
     leftArrow.release = () => {
       //If the left arrow has been released, and the right arrow isn't down,
-      //and the sprite isn't moving vertically: 
+      //and the sprite isn't moving vertically:
       //Stop the sprite
       if (!rightArrow.isDown && sprite.vy === 0) {
         sprite.vx = 0;
