@@ -3,7 +3,7 @@ logs
 *.log
 npm-debug.log*
 
-public/bundle.js*
+public/dist/
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
