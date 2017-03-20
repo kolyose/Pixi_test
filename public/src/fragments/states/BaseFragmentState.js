@@ -9,4 +9,7 @@ export default class BaseFragmentState {
 
   // eslint-disable-next-line class-methods-use-this
   exit() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  toggleDrag() {}
 }
