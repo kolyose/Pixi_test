@@ -1,4 +1,4 @@
-import { Loader, Sprite } from "./aliases";
+import { Loader, Sprite, ColorMatrixFilter } from "./aliases";
 import Model from "./model/Model";
 import FragmentsFactory from "./fragments/FragmentsFactory";
 import FragmentsManager from "./fragments/FragmentsManager";
@@ -17,6 +17,9 @@ Loader.add("image", "image.jpg").load((loader, resources) => {
   const bg = new Sprite(texture);
   bg.scale.set(scale);
   app.stage.addChild(bg);
+  const colorMatrix = new ColorMatrixFilter();
+  bg.filters = [colorMatrix];
+  colorMatrix.greyscale(0.1);
 
   const fragments = FragmentsFactory.getFragmentsForTexture(texture);
   /* eslint-disable */
