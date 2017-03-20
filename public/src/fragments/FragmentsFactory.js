@@ -5,28 +5,32 @@ import FragmentStatesFactory from "./states/FragmentStatesFactory";
 
 class FragmentsFactory {
   getFragmentsForTexture(txr) {
-    const texture = txr;
     const fragments = [];
     const fragmentDimensions = Model.fragmentDimensions;
     const rows = Model.rows;
     const columns = Model.columns;
 
-    for (let i = 0; i < rows; i + 1) {
-      for (let j = 0; j < columns; j + 1) {
+    for (let i = 0; i < rows - 1; i += 1) {
+      for (let j = 0; j < columns - 1; j += 1) {
         const anchorPosition = {
           x: j * fragmentDimensions.width,
           y: i * fragmentDimensions.height
         };
+
         const frameRect = new Rectangle(
           anchorPosition.x,
           anchorPosition.y,
           fragmentDimensions.width,
           fragmentDimensions.height
         );
+
+        const texture = txr.clone();
         texture.frame = frameRect;
-        fragments.push(
-          this.initFragment(this.createFragment(texture, anchorPosition))
+
+        const fragment = this.initFragment(
+          this.createFragment(texture, anchorPosition)
         );
+        fragments.push(fragment);
       }
     }
 
@@ -40,9 +44,8 @@ class FragmentsFactory {
 
   // eslint-disable-next-line
   initFragment(fragment) {
-    return fragment.applyState(
-      FragmentStatesFactory.getStateDraggable(fragment)
-    );
+    fragment.applyState(FragmentStatesFactory.getStateDraggable(fragment));
+    return fragment;
   }
 }
 

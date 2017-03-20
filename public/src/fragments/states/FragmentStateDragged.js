@@ -5,10 +5,12 @@ import app from "./../../app";
 
 export default class FragmentStateDragged extends BaseFragmentState {
   entry() {
-    app.ticker.add(this.checkPosition);
+    super.entry();
+    app.ticker.add(this.checkPosition.bind(this));
   }
 
   exit() {
+    super.exit();
     app.ticker.remove(this.checkPosition);
   }
 

@@ -7,21 +7,18 @@ import { EVENT_ALL_FRAGMENTS_ANCHORED } from "./events";
 
 Loader.add("image", "image.jpg").load((loader, resources) => {
   const texture = resources.image.texture;
-  console.log("1");
+
   Model.initLayoutSettingsByImageDimensions(
     { width: texture.width, height: texture.height },
     { width: app.renderer.width, height: app.renderer.height }
   );
-  console.log("2");
+
   const scale = Model.scale;
   const bg = new Sprite(texture);
   bg.scale.set(scale);
   app.stage.addChild(bg);
 
   const fragments = FragmentsFactory.getFragmentsForTexture(texture);
-
-  console.log("4");
-
   /* eslint-disable */
   fragments.forEach(fragment => {
     fragment.view.scale.set(scale, scale);
@@ -30,7 +27,6 @@ Loader.add("image", "image.jpg").load((loader, resources) => {
     app.stage.addChild(fragment.view);
   });
   /* eslint-enable */
-  console.log("4");
   FragmentsManager.fragments = fragments;
   FragmentsManager.subscribe();
   FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, () => {

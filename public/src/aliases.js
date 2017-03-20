@@ -5,3 +5,4 @@ export const Loader = PIXI.loader;
 export const Sprite = PIXI.Sprite;
 export const EventEmitter = PIXI.utils.EventEmitter;
 export const Rectangle = PIXI.Rectangle;
+export const Texture = PIXI.Texture;
