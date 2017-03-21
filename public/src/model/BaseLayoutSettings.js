@@ -11,4 +11,7 @@ export default class BaseLayoutSettings {
       this.getRowsByFragmentsNumber(fragmentsNumber);
     return { width, height };
   }
+
+  // eslint-disable-next-line
+  get scale() {}
 }

@@ -31,15 +31,17 @@ export default class FragmentStateDragged extends BaseFragmentState {
 
   checkPosition() {
     if (
-      Math.abs(this._fragment.view.x - this._fragment.anchorPosition.x) >
-      Model.anchorPrecision
+      Math.abs(
+        this._fragment.view.x - this._fragment.anchorPosition.x * Model.scale
+      ) > Model.anchorPrecision
     ) {
       return;
     }
 
     if (
-      Math.abs(this._fragment.view.y - this._fragment.anchorPosition.y) >
-      Model.anchorPrecision
+      Math.abs(
+        this._fragment.view.y - this._fragment.anchorPosition.y * Model.scale
+      ) > Model.anchorPrecision
     ) {
       return;
     }

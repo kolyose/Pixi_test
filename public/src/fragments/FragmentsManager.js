@@ -15,11 +15,8 @@ class FragmentsManager extends EventEmitter {
     TinkManager.pointer.press = () => {
       if (!this.fragments || !this.fragments.length) return;
 
-      console.log(`PRESS`);
-
       this.fragments.every(fragment => {
         if (TinkManager.pointer.hitTestSprite(fragment.view)) {
-          console.log(`pressed fragment id: ${fragment.id}`);
           this.draggingFragment = fragment;
           this.draggingFragment.toggleDrag();
           return false;
@@ -29,10 +26,7 @@ class FragmentsManager extends EventEmitter {
     };
 
     TinkManager.pointer.release = () => {
-      console.log(`RELEASE`);
       if (!this.draggingFragment) return;
-
-      console.log(`dragging fragment id: ${this.draggingFragment.id}`);
       this.draggingFragment.toggleDrag();
       this.draggingFragment = null;
     };
@@ -48,15 +42,13 @@ class FragmentsManager extends EventEmitter {
 
   subscribe() {
     this.fragments.forEach(fragment => {
-      fragment.once(EVENT_FRAGMENT_ANCHORED, this.fragmentAnchoredHandler);
+      fragment.once(EVENT_FRAGMENT_ANCHORED, () => {
+        this.anchoredFragments += 1;
+        if (this.anchoredFragments === this.fragments.length) {
+          this.emit(EVENT_ALL_FRAGMENTS_ANCHORED);
+        }
+      });
     });
-  }
-
-  _fragmentAnchoredHandler() {
-    this.anchoredFragments += 1;
-    if (this.anchoredFragments === this.fragments.length) {
-      this.emit(EVENT_ALL_FRAGMENTS_ANCHORED);
-    }
   }
 }
 

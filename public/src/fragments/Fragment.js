@@ -34,10 +34,6 @@ export default class Fragment extends EventEmitter {
     this.emit(EVENT_FRAGMENT_ANCHORED);
   }
 
-  set anchorPosition(pos) {
-    this._anchorPosition = pos;
-  }
-
   get anchorPosition() {
     return this._anchorPosition;
   }

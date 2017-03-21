@@ -11,8 +11,8 @@ class FragmentsFactory {
     const columns = Model.columns;
     let fragmentId = 0;
 
-    for (let i = 0; i < rows - 1; i += 1) {
-      for (let j = 0; j < columns - 1; j += 1) {
+    for (let i = 0; i < rows; i += 1) {
+      for (let j = 0; j < columns; j += 1) {
         const anchorPosition = {
           x: j * fragmentDimensions.width,
           y: i * fragmentDimensions.height
