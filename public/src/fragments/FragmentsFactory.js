@@ -9,6 +9,7 @@ class FragmentsFactory {
     const fragmentDimensions = Model.fragmentDimensions;
     const rows = Model.rows;
     const columns = Model.columns;
+    let fragmentId = 0;
 
     for (let i = 0; i < rows - 1; i += 1) {
       for (let j = 0; j < columns - 1; j += 1) {
@@ -28,9 +29,11 @@ class FragmentsFactory {
         texture.frame = frameRect;
 
         const fragment = this.initFragment(
-          this.createFragment(texture, anchorPosition)
+          this.createFragment(fragmentId, texture, anchorPosition)
         );
         fragments.push(fragment);
+
+        fragmentId += 1;
       }
     }
 
@@ -38,8 +41,8 @@ class FragmentsFactory {
   }
 
   // eslint-disable-next-line
-  createFragment(texture, anchoredPosition) {
-    return new Fragment(texture, anchoredPosition);
+  createFragment(fragmentId, texture, anchoredPosition) {
+    return new Fragment(fragmentId, texture, anchoredPosition);
   }
 
   // eslint-disable-next-line

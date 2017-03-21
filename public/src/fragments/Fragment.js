@@ -3,8 +3,9 @@ import TinkManager from "./../TinkManager";
 import { EVENT_FRAGMENT_ANCHORED } from "./../events";
 
 export default class Fragment extends EventEmitter {
-  constructor(texture, anchorPosition) {
+  constructor(id, texture, anchorPosition) {
     super();
+    this._id = id;
     this._sprite = new Sprite(texture);
     this._anchorPosition = anchorPosition;
     this._state = undefined;
@@ -25,6 +26,7 @@ export default class Fragment extends EventEmitter {
   }
 
   makeUndraggable() {
+    this._sprite.draggable = false;
     TinkManager.makeUndraggable(this._sprite);
   }
 
@@ -42,5 +44,9 @@ export default class Fragment extends EventEmitter {
 
   get view() {
     return this._sprite;
+  }
+
+  get id() {
+    return this._id;
   }
 }

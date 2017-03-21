@@ -15,9 +15,11 @@ class FragmentsManager extends EventEmitter {
     TinkManager.pointer.press = () => {
       if (!this.fragments || !this.fragments.length) return;
 
+      console.log(`PRESS`);
+
       this.fragments.every(fragment => {
         if (TinkManager.pointer.hitTestSprite(fragment.view)) {
-          if (this.draggingFragment) this.draggingFragment.toggleDrag();
+          console.log(`pressed fragment id: ${fragment.id}`);
           this.draggingFragment = fragment;
           this.draggingFragment.toggleDrag();
           return false;
@@ -27,8 +29,10 @@ class FragmentsManager extends EventEmitter {
     };
 
     TinkManager.pointer.release = () => {
+      console.log(`RELEASE`);
       if (!this.draggingFragment) return;
 
+      console.log(`dragging fragment id: ${this.draggingFragment.id}`);
       this.draggingFragment.toggleDrag();
       this.draggingFragment = null;
     };

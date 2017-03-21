@@ -4,14 +4,20 @@ import FragmentStatesFactory from "./FragmentStatesFactory";
 import app from "./../../app";
 
 export default class FragmentStateDragged extends BaseFragmentState {
+  constructor(fragment, statesFactory) {
+    super(fragment, statesFactory);
+
+    this._checkPosition = this.checkPosition.bind(this);
+  }
+
   entry() {
     super.entry();
-    app.ticker.add(this.checkPosition.bind(this));
+    app.ticker.add(this._checkPosition);
   }
 
   exit() {
     super.exit();
-    app.ticker.remove(this.checkPosition);
+    app.ticker.remove(this._checkPosition);
   }
 
   toggleDrag() {
@@ -38,8 +44,6 @@ export default class FragmentStateDragged extends BaseFragmentState {
       return;
     }
 
-    this._fragment.view.x = this._fragment.anchorPosition.x;
-    this._fragment.view.y = this._fragment.anchorPosition.y;
     this._fragment.applyState(
       FragmentStatesFactory.getStateAnchored(
         this._fragment,
