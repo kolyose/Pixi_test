@@ -33,7 +33,8 @@
       "node": true
     },
     "rules": {
-      "no-underscore-dangle": "off"
+      "no-underscore-dangle": "off",
+      "line-break-style": 0
     }
   },
   "dependencies": {

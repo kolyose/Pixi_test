@@ -4,8 +4,13 @@ import Fragment from "./Fragment";
 import FragmentStatesFactory from "./states/FragmentStatesFactory";
 
 class FragmentsFactory {
+  constructor() {
+    this._fragmentsPool = [];
+  }
+
   getFragmentsForTexture(txr) {
-    const fragments = [];
+    if (this._fragmentsPool.length) return this._fragmentsPool;
+
     const fragmentDimensions = Model.fragmentDimensions;
     const rows = Model.rows;
     const columns = Model.columns;
@@ -31,13 +36,13 @@ class FragmentsFactory {
         const fragment = this.initFragment(
           this.createFragment(fragmentId, texture, anchorPosition)
         );
-        fragments.push(fragment);
+        this._fragmentsPool.push(fragment);
 
         fragmentId += 1;
       }
     }
 
-    return fragments;
+    return this._fragmentsPool;
   }
 
   // eslint-disable-next-line
