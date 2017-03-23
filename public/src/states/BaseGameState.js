@@ -11,7 +11,10 @@ export default class BaseGameState {
   exit() {}
 
   // eslint-disable-next-line
-  play() {}
+  startGameplay() {}
+
+  // eslint-disable-next-line
+  stopGameplay() {}
 
   // eslint-disable-next-line
   onLoadComplete() {}

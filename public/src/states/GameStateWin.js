@@ -1,10 +1,10 @@
 import BaseGameState from "./BaseGameState";
-import { MESSAGE_PLAY } from "./../localization";
+import { MESSAGE_WIN } from "./../localization";
 
-export default class GameStateReadyToPlay extends BaseGameState {
+export default class GameStateWin extends BaseGameState {
   entry() {
     super.entry();
-    this._game.showPlayPopup(MESSAGE_PLAY);
+    this._game.showPlayPopup(MESSAGE_WIN);
   }
 
   exit() {

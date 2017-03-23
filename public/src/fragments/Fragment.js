@@ -17,6 +17,10 @@ export default class Fragment extends EventEmitter {
     this._state.entry();
   }
 
+  reset() {
+    this._state.reset();
+  }
+
   toggleDrag() {
     this._state.toggleDrag();
   }

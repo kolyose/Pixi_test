@@ -6,7 +6,6 @@ class Model {
     /* TODO: put here and parse settings JSON */
     this._layoutSettings = undefined;
     this._fragmentsNumber = 12;
-    this._texture = undefined;
   }
 
   /*
@@ -24,14 +23,6 @@ class Model {
       imageDimensions,
       rendererDimensions
     );
-  }
-
-  get texture() {
-    return this._texture;
-  }
-
-  set texture(texture) {
-    this._texture = texture;
   }
 
   get scale() {

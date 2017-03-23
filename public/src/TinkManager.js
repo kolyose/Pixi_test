@@ -4,22 +4,31 @@ import app from "./app";
 
 class TinkManager {
   constructor() {
-    this.tink = new Tink(PIXI, app.view);
-    this._pointer = this.tink.makePointer();
+    this._tink = new Tink(PIXI, app.view);
+    this._pointer = this._tink.makePointer();
 
     app.ticker.add(() => {
-      this.tink.update();
+      this._tink.update();
     });
   }
 
   makeDraggable(sprite) {
-    if (!this.tink) throw new Error("TinkManager should be initialized first!");
-    this.tink.makeDraggable(sprite);
+    if (!this._tink) {
+      throw new Error("TinkManager should be initialized first!");
+    }
+
+    this._tink.makeDraggable(sprite);
   }
 
   makeUndraggable(sprite) {
-    if (!this.tink) throw new Error("TinkManager should be initialized first!");
-    this.tink.makeUndraggable(sprite);
+    if (!this._tink) {
+      throw new Error("TinkManager should be initialized first!");
+    }
+    this._tink.makeUndraggable(sprite);
+  }
+
+  createButton(frames) {
+    return this._tink.button(frames);
   }
 
   get pointer() {

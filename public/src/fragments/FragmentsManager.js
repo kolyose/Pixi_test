@@ -8,7 +8,6 @@ import {
 class FragmentsManager extends EventEmitter {
   constructor() {
     super();
-    this.reset();
 
     TinkManager.pointer.press = () => {
       if (!this.fragments || !this.fragments.length) return;
@@ -31,13 +30,19 @@ class FragmentsManager extends EventEmitter {
   }
 
   reset() {
+    if (this._fragments) {
+      this._fragments.forEach(fragment => {
+        fragment.reset();
+      });
+    }
     this._fragments = [];
     this.draggingFragment = undefined;
     this.anchoredFragments = 0;
   }
 
-  subscribe() {
-    this.fragments.forEach(fragment => {
+  set fragments(frags) {
+    this._fragments = frags;
+    this._fragments.forEach(fragment => {
       fragment.once(EVENT_FRAGMENT_ANCHORED, () => {
         this.anchoredFragments += 1;
         if (this.anchoredFragments === this.fragments.length) {
@@ -45,9 +50,6 @@ class FragmentsManager extends EventEmitter {
         }
       });
     });
-  }
-  set fragments(frags) {
-    this._fragments = frags;
   }
 
   get fragments() {
