@@ -7,6 +7,8 @@ export default class Fragment extends EventEmitter {
     super();
     this._id = id;
     this._sprite = new Sprite(texture);
+    TinkManager.makeDraggable(this._sprite);
+    this._sprite.draggable = false;
     this._anchorPosition = anchorPosition;
     this._state = undefined;
   }
@@ -26,12 +28,11 @@ export default class Fragment extends EventEmitter {
   }
 
   makeDraggable() {
-    TinkManager.makeDraggable(this._sprite);
+    this._sprite.draggable = true;
   }
 
   makeUndraggable() {
     this._sprite.draggable = false;
-    TinkManager.makeUndraggable(this._sprite);
   }
 
   dispatchAnchored() {

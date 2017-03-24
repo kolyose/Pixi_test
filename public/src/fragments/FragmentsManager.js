@@ -10,9 +10,9 @@ class FragmentsManager extends EventEmitter {
     super();
 
     TinkManager.pointer.press = () => {
-      if (!this.fragments || !this.fragments.length) return;
+      if (!this._fragments || !this._fragments.length) return;
 
-      this.fragments.every(fragment => {
+      this._fragments.every(fragment => {
         if (TinkManager.pointer.hitTestSprite(fragment.view)) {
           this.draggingFragment = fragment;
           this.draggingFragment.toggleDrag();

@@ -1,6 +1,5 @@
 import BaseFragmentState from "./BaseFragmentState";
 import Model from "./../../model/Model";
-import FragmentStatesFactory from "./FragmentStatesFactory";
 import app from "./../../app";
 
 export default class FragmentStateDragged extends BaseFragmentState {
@@ -22,10 +21,7 @@ export default class FragmentStateDragged extends BaseFragmentState {
 
   toggleDrag() {
     this._fragment.applyState(
-      FragmentStatesFactory.getStateDraggable(
-        this._fragment,
-        this._statesFactory
-      )
+      this._statesFactory.getStateDraggable(this._fragment, this._statesFactory)
     );
   }
 
@@ -47,10 +43,7 @@ export default class FragmentStateDragged extends BaseFragmentState {
     }
 
     this._fragment.applyState(
-      FragmentStatesFactory.getStateAnchored(
-        this._fragment,
-        this._statesFactory
-      )
+      this._statesFactory.getStateAnchored(this._fragment, this._statesFactory)
     );
   }
 }
