@@ -1,4 +1,4 @@
-import { Sprite, ColorMatrixFilter, EventEmitter } from "./aliases";
+import { Sprite, ColorMatrixFilter, EventEmitter, Text } from "./aliases";
 import PlayPopup from "./popups/PlayPopup";
 import { EVENT_PLAY } from "./events";
 
@@ -6,8 +6,12 @@ export default class GameView extends EventEmitter {
   constructor(stage) {
     super();
     this._stage = stage;
+
     this._fragmentsContainer = new Sprite();
     this._stage.addChild(this._fragmentsContainer);
+
+    this._tfCountdown = new Text();
+    this._stage.addChild(this._tfCountdown);
   }
 
   initBackground(texture, scale) {
@@ -17,6 +21,10 @@ export default class GameView extends EventEmitter {
     const colorMatrix = new ColorMatrixFilter();
     bg.filters = [colorMatrix];
     colorMatrix.greyscale(0.1);
+  }
+
+  updateCountdown(time) {
+    this._tfCountdown.text = time.toString();
   }
 
   addFragments(fragments, scale) {

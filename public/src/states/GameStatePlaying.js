@@ -6,6 +6,7 @@ export default class GameStatePlaying extends BaseGameState {
     this._game.resetView();
     this._game.initBackground();
     this._game.setupFragments();
+    this._game.startRound();
   }
 
   stopGameplay(isWin) {

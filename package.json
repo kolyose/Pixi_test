@@ -34,7 +34,7 @@
     },
     "rules": {
       "no-underscore-dangle": "off",
-      "line-break-style": 0
+      "linebreak-style": "off"
     }
   },
   "dependencies": {

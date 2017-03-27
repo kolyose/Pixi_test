@@ -2,6 +2,7 @@ import HorizontalLayoutSettings from "./HorizontalLayoutSettings";
 import VerticalLayoutSettings from "./VerticalLayoutSettings";
 import app from "./../app";
 import EventEmitter from "./../aliases";
+import { EVENT_ROUND_TIMER_TICK, EVENT_ROUND_TIME_ENDED } from "./../events";
 
 class Model extends EventEmitter {
   constructor() {
@@ -10,6 +11,8 @@ class Model extends EventEmitter {
     this._layoutSettings = undefined;
     this._fragmentsNumber = 12;
     this._roundTime = 60; // in seconds
+    this._timeRemaining = this._roundTime;
+    this._deltaTime = 0;
   }
 
   /*
@@ -29,17 +32,25 @@ class Model extends EventEmitter {
     );
   }
 
-  startNewRound() {
-    app.ticker.remove(this._updateTimeRemaining);
-    this._timeRemaining = this._roundTime;
+  startRoundCountdown() {
     app.ticker.add(this._updateTimeRemaining);
   }
 
+  stopRoundCountdown() {
+    app.ticker.remove(this._updateTimeRemaining);
+    this._timeRemaining = this._roundTime;
+  }
+
   _updateTimeRemaining() {
-    this._timeRemaining -= app.ticker.elapsedMS / 1000;
+    this._deltaTime += app.ticker.elapsedMS;
+    if (this._deltaTime < 1000) return;
+
+    this._timeRemaining -= this._deltaTime / 1000;
+    this._deltaTime = 0;
+    this.emit(EVENT_ROUND_TIMER_TICK);
+
     if (this._timeRemaining <= 0) {
-      app.ticker.remove(this._updateTimeRemaining);
-      this.emit("ADD new event here");
+      this.emit(EVENT_ROUND_TIME_ENDED);
     }
   }
 

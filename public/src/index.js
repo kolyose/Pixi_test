@@ -3,7 +3,12 @@ import Model from "./model/Model";
 import FragmentsFactory from "./fragments/FragmentsFactory";
 import FragmentsManager from "./fragments/FragmentsManager";
 import app from "./app";
-import { EVENT_ALL_FRAGMENTS_ANCHORED, EVENT_PLAY } from "./events";
+import {
+  EVENT_ALL_FRAGMENTS_ANCHORED,
+  EVENT_PLAY,
+  EVENT_ROUND_TIMER_TICK,
+  EVENT_ROUND_TIME_ENDED
+} from "./events";
 import GameView from "./GameView";
 import GameStatesFactory from "./states/GameStatesFactory";
 
@@ -37,6 +42,13 @@ class Game {
       { width: mainTexture.width, height: mainTexture.height },
       { width: app.renderer.width, height: app.renderer.height }
     );
+    Model.on(EVENT_ROUND_TIMER_TICK, () => {
+      this._view.updateCountdown(Model.timeRemaining);
+    });
+
+    Model.on(EVENT_ROUND_TIME_ENDED, () => {
+      this.stopRound(false);
+    });
   }
 
   initPopups() {
@@ -60,8 +72,36 @@ class Game {
     FragmentsManager.reset();
     FragmentsManager.fragments = fragments;
     FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, () => {
-      this._state.stopGameplay();
+      this.stopRound(true);
     });
+  }
+
+  startRound() {
+    this._view.updateCountdown(Model.timeRemaining);
+    this.startRoundCountdown();
+  }
+
+  stopRound(isWin) {
+    this.stopRoundCountdown();
+    this.stopGameplay(isWin);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  startRoundCountdown() {
+    Model.startRoundCountdown();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  stopRoundCountdown() {
+    Model.stopRoundCountdown();
+  }
+
+  startGameplay() {
+    this._state.startGameplay();
+  }
+
+  stopGameplay(isWin) {
+    this._state.stopGameplay(isWin);
   }
 
   showPlayPopup(message) {
@@ -70,14 +110,6 @@ class Game {
 
   hidePlayPopup() {
     this._view.hidePlayPopup();
-  }
-
-  startGameplay() {
-    this._state.startGameplay();
-  }
-
-  stopGameplay() {
-    this._state.stopGameplay();
   }
 }
 
