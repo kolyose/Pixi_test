@@ -1,11 +1,15 @@
 import HorizontalLayoutSettings from "./HorizontalLayoutSettings";
 import VerticalLayoutSettings from "./VerticalLayoutSettings";
+import app from "./../app";
+import EventEmitter from "./../aliases";
 
-class Model {
+class Model extends EventEmitter {
   constructor() {
+    super();
     /* TODO: put here and parse settings JSON */
     this._layoutSettings = undefined;
     this._fragmentsNumber = 12;
+    this._roundTime = 60; // in seconds
   }
 
   /*
@@ -23,6 +27,20 @@ class Model {
       imageDimensions,
       rendererDimensions
     );
+  }
+
+  startNewRound() {
+    app.ticker.remove(this._updateTimeRemaining);
+    this._timeRemaining = this._roundTime;
+    app.ticker.add(this._updateTimeRemaining);
+  }
+
+  _updateTimeRemaining() {
+    this._timeRemaining -= app.ticker.elapsedMS / 1000;
+    if (this._timeRemaining <= 0) {
+      app.ticker.remove(this._updateTimeRemaining);
+      this.emit("ADD new event here");
+    }
   }
 
   get scale() {
@@ -48,6 +66,10 @@ class Model {
   // eslint-disable-next-line
   get anchorPrecision() {
     return 10;
+  }
+
+  get timeRemaining() {
+    return this._timeRemaining;
   }
 }
 
