@@ -1,7 +1,7 @@
 import HorizontalLayoutSettings from "./HorizontalLayoutSettings";
 import VerticalLayoutSettings from "./VerticalLayoutSettings";
 import app from "./../app";
-import EventEmitter from "./../aliases";
+import { EventEmitter } from "./../aliases";
 import { EVENT_ROUND_TIMER_TICK, EVENT_ROUND_TIME_ENDED } from "./../events";
 
 class Model extends EventEmitter {
@@ -10,7 +10,7 @@ class Model extends EventEmitter {
     /* TODO: put here and parse settings JSON */
     this._layoutSettings = undefined;
     this._fragmentsNumber = 12;
-    this._roundTime = 60; // in seconds
+    this._roundTime = 10; // in seconds
     this._timeRemaining = this._roundTime;
     this._deltaTime = 0;
   }
@@ -33,11 +33,11 @@ class Model extends EventEmitter {
   }
 
   startRoundCountdown() {
-    app.ticker.add(this._updateTimeRemaining);
+    app.ticker.add(this._updateTimeRemaining.bind(this));
   }
 
   stopRoundCountdown() {
-    app.ticker.remove(this._updateTimeRemaining);
+    app.ticker.remove(this._updateTimeRemaining.bind(this));
     this._timeRemaining = this._roundTime;
   }
 

@@ -42,7 +42,9 @@ class Game {
       { width: mainTexture.width, height: mainTexture.height },
       { width: app.renderer.width, height: app.renderer.height }
     );
+
     Model.on(EVENT_ROUND_TIMER_TICK, () => {
+      console.log("EVENT_ROUND_TIMER_TICK");
       this._view.updateCountdown(Model.timeRemaining);
     });
 

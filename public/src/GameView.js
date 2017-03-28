@@ -24,7 +24,7 @@ export default class GameView extends EventEmitter {
   }
 
   updateCountdown(time) {
-    this._tfCountdown.text = time.toString();
+    this._tfCountdown.text = Math.round(time).toString();
   }
 
   addFragments(fragments, scale) {
