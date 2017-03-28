@@ -5,21 +5,28 @@ import app from "./../../app";
 export default class FragmentStateAnchored extends BaseFragmentState {
   constructor(fragment, statesFactory) {
     super(fragment, statesFactory);
-    this._preventMovement = this.preventMovement.bind(this);
+    this._remainAnchored = this._remainAnchored.bind(this);
   }
 
   entry() {
     super.entry();
     this._fragment.makeUndraggable();
-    app.ticker.add(this._preventMovement);
+    app.ticker.add(this._remainAnchored);
     this._fragment.dispatchAnchored();
   }
 
-  toggleDrag() {
-    app.ticker.remove(this._preventMovement);
+  reset() {
+    super.reset();
+    this._fragment.applyState(
+      this._statesFactory.getStateDraggable(this._fragment)
+    );
   }
 
-  preventMovement() {
+  toggleDrag() {
+    app.ticker.remove(this._remainAnchored);
+  }
+
+  _remainAnchored() {
     const scale = Model.scale;
     this._fragment.view.x = this._fragment.anchorPosition.x * scale;
     this._fragment.view.y = this._fragment.anchorPosition.y * scale;

@@ -16,7 +16,7 @@ class Game {
   constructor() {
     this._state = undefined;
     this._view = new GameView(app.stage);
-    this._view.on(EVENT_PLAY, this.startGameplay.bind(this));
+    this._view.on(EVENT_PLAY, this.startRound.bind(this));
   }
 
   applyState(newState) {
@@ -44,8 +44,7 @@ class Game {
     );
 
     Model.on(EVENT_ROUND_TIMER_TICK, () => {
-      console.log("EVENT_ROUND_TIMER_TICK");
-      this._view.updateCountdown(Model.timeRemaining);
+      this.updateRoundCountdownView();
     });
 
     Model.on(EVENT_ROUND_TIME_ENDED, () => {
@@ -65,13 +64,18 @@ class Game {
     this._view.reset();
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  resetFragmentsManager() {
+    FragmentsManager.removeListener(EVENT_ALL_FRAGMENTS_ANCHORED);
+    FragmentsManager.reset();
+  }
+
   setupFragments() {
     const fragments = FragmentsFactory.getFragmentsForTexture(
       Loader.resources.main.texture
     );
     this._view.addFragments(fragments, Model.scale);
 
-    FragmentsManager.reset();
     FragmentsManager.fragments = fragments;
     FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, () => {
       this.stopRound(true);
@@ -79,13 +83,11 @@ class Game {
   }
 
   startRound() {
-    this._view.updateCountdown(Model.timeRemaining);
-    this.startRoundCountdown();
+    this._state.startRound();
   }
 
   stopRound(isWin) {
-    this.stopRoundCountdown();
-    this.stopGameplay(isWin);
+    this._state.stopRound(isWin);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -98,12 +100,8 @@ class Game {
     Model.stopRoundCountdown();
   }
 
-  startGameplay() {
-    this._state.startGameplay();
-  }
-
-  stopGameplay(isWin) {
-    this._state.stopGameplay(isWin);
+  updateRoundCountdownView() {
+    this._view.updateCountdown(Model.timeRemaining);
   }
 
   showPlayPopup(message) {

@@ -13,6 +13,7 @@ class Model extends EventEmitter {
     this._roundTime = 10; // in seconds
     this._timeRemaining = this._roundTime;
     this._deltaTime = 0;
+    this._updateTimeRemaining = this._updateTimeRemaining.bind(this);
   }
 
   /*
@@ -33,11 +34,11 @@ class Model extends EventEmitter {
   }
 
   startRoundCountdown() {
-    app.ticker.add(this._updateTimeRemaining.bind(this));
+    app.ticker.add(this._updateTimeRemaining);
   }
 
   stopRoundCountdown() {
-    app.ticker.remove(this._updateTimeRemaining.bind(this));
+    app.ticker.remove(this._updateTimeRemaining);
     this._timeRemaining = this._roundTime;
   }
 

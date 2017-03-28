@@ -12,8 +12,8 @@ export default class GameStateReadyToPlay extends BaseGameState {
     this._game.hidePlayPopup();
   }
 
-  startGameplay() {
-    super.startGameplay();
+  startRound() {
+    super.startRound();
     this._game.applyState(this._statesFactory.getStatePlaying(this._game));
   }
 }

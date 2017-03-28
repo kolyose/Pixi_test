@@ -11,10 +11,10 @@ export default class BaseGameState {
   exit() {}
 
   // eslint-disable-next-line
-  startGameplay() {}
+  startRound() {}
 
   // eslint-disable-next-line
-  stopGameplay() {}
+  stopRound(isWin) {}
 
   // eslint-disable-next-line
   onLoadComplete() {}

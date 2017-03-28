@@ -19,6 +19,13 @@ export default class FragmentStateDragged extends BaseFragmentState {
     app.ticker.remove(this._checkPosition);
   }
 
+  reset() {
+    super.reset();
+    this._fragment.applyState(
+      this._statesFactory.getStateAnchored(this._fragment)
+    );
+  }
+
   toggleDrag() {
     this._fragment.applyState(
       this._statesFactory.getStateDraggable(this._fragment, this._statesFactory)
