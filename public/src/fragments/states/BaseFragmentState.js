@@ -18,5 +18,11 @@ export default class BaseFragmentState {
   }
 
   // eslint-disable-next-line class-methods-use-this
+  anchor() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  anchorComplete() {}
+
+  // eslint-disable-next-line class-methods-use-this
   toggleDrag() {}
 }

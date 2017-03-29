@@ -1,6 +1,6 @@
 /* global PIXI Tink*/
 
-import app from "./app";
+import app from "./../app";
 
 class TinkManager {
   constructor() {

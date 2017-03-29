@@ -2,6 +2,7 @@ import FragmentStateDraggable from "./FragmentStateDraggable";
 import FragmentStateDragged from "./FragmentStateDragged";
 import FragmentStateAnchored from "./FragmentStateAnchored";
 import FragmentStateInit from "./FragmentStateInit";
+import FragmentStateAnchoring from "./FragmentStateAnchoring";
 
 class FragmentStatesFactory {
   getStateDraggable(fragment) {
@@ -18,6 +19,10 @@ class FragmentStatesFactory {
 
   getStateInit(fragment) {
     return new FragmentStateInit(fragment, this);
+  }
+
+  getStateAnchoring(fragment) {
+    return new FragmentStateAnchoring(fragment, this);
   }
 }
 

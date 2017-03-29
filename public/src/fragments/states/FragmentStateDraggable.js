@@ -11,4 +11,11 @@ export default class FragmentStateDraggable extends BaseFragmentState {
       this._statesFactory.getStateDragged(this._fragment, this._statesFactory)
     );
   }
+
+  anchor() {
+    super.anchor();
+    this._fragment.applyState(
+      this._statesFactory.getStateAnchoring(this._fragment, this._statesFactory)
+    );
+  }
 }

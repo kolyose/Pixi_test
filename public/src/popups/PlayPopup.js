@@ -1,6 +1,6 @@
 import { Sprite, Graphics, Loader, Text, EventEmitter } from "./../aliases";
 import { EVENT_PLAY } from "./../events";
-import TinkManager from "./../TinkManager";
+import TinkManager from "./../utils/TinkManager";
 
 export default class PlayPopup extends EventEmitter {
   constructor() {

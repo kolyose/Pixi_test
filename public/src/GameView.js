@@ -1,6 +1,13 @@
-import { Sprite, ColorMatrixFilter, EventEmitter, Text } from "./aliases";
+import {
+  Sprite,
+  ColorMatrixFilter,
+  EventEmitter,
+  Text,
+  Graphics
+} from "./aliases";
 import PlayPopup from "./popups/PlayPopup";
-import { EVENT_PLAY } from "./events";
+import { EVENT_PLAY, EVENT_FORCE_END } from "./events";
+import TinkManager from "./utils/TinkManager";
 
 export default class GameView extends EventEmitter {
   constructor(stage) {
@@ -14,13 +21,27 @@ export default class GameView extends EventEmitter {
     this._stage.addChild(this._tfCountdown);
   }
 
-  initBackground(texture, scale) {
+  init(texture, scale) {
     const bg = new Sprite(texture);
     bg.scale.set(scale);
     this._stage.addChildAt(bg, 0);
     const colorMatrix = new ColorMatrixFilter();
     bg.filters = [colorMatrix];
     colorMatrix.greyscale(0.1);
+
+    const btnBg = new Graphics();
+    btnBg.lineStyle(1, 0x0000ff, 1);
+    btnBg.beginFill(0xcccccc);
+    btnBg.drawRoundedRect(0, 0, 50, 25, 10);
+    btnBg.endFill();
+
+    this._btn = TinkManager.createButton([btnBg.generateCanvasTexture()]);
+    this._btn.x = bg.width - this._btn.width;
+    this._stage.addChild(this._btn);
+
+    this._btn.release = () => {
+      this.emit(EVENT_FORCE_END);
+    };
   }
 
   updateCountdown(time) {

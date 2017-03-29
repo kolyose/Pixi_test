@@ -1,5 +1,4 @@
 import BaseFragmentState from "./BaseFragmentState";
-import Model from "./../../model/Model";
 import app from "./../../app";
 
 export default class FragmentStateAnchored extends BaseFragmentState {
@@ -25,8 +24,7 @@ export default class FragmentStateAnchored extends BaseFragmentState {
   }
 
   _remainAnchored() {
-    const scale = Model.scale;
-    this._fragment.view.x = this._fragment.anchorPosition.x * scale;
-    this._fragment.view.y = this._fragment.anchorPosition.y * scale;
+    this._fragment.view.x = this._fragment.anchorPosition.x;
+    this._fragment.view.y = this._fragment.anchorPosition.y;
   }
 }

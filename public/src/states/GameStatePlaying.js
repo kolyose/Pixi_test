@@ -4,7 +4,7 @@ export default class GameStatePlaying extends BaseGameState {
   entry() {
     super.entry();
     this._game.resetView();
-    this._game.initBackground();
+    this._game.initView();
     this._game.setupFragments();
     this._game.updateRoundCountdownView();
     this._game.startRoundCountdown();
@@ -13,17 +13,19 @@ export default class GameStatePlaying extends BaseGameState {
   exit() {
     super.exit();
     this._game.stopRoundCountdown();
-    this._game.resetFragments();
-    this._game.resetView();
   }
 
   stopRound(isWin) {
-    super.stopRound();
+    super.stopRound(isWin);
 
     if (isWin) {
       this._game.applyState(this._statesFactory.getStateWin(this._game));
     } else {
       this._game.applyState(this._statesFactory.getStateLose(this._game));
     }
+  }
+
+  abortRound() {
+    this._game.applyState(this._statesFactory.getStateAborting(this._game));
   }
 }

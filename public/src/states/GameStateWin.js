@@ -4,6 +4,7 @@ import { MESSAGE_WIN } from "./../localization";
 export default class GameStateWin extends BaseGameState {
   entry() {
     super.entry();
+    this._game.resetFragments();
     this._game.showPlayPopup(MESSAGE_WIN);
   }
 

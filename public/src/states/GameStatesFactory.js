@@ -4,6 +4,7 @@ import GameStateReadyToPlay from "./GameStateReadyToPlay";
 import GameStatePlaying from "./GameStatePlaying";
 import GameStateWin from "./GameStateWin";
 import GameStateLose from "./GameStateLose";
+import GameStateAborting from "./GameStateAborting";
 
 class GameStatesFactory {
   constructor() {
@@ -53,6 +54,16 @@ class GameStatesFactory {
       this._statesPool.set(GameStateLose, new GameStateLose(game, this));
     }
     return this._statesPool.get(GameStateLose);
+  }
+
+  getStateAborting(game) {
+    if (!this._statesPool.get(GameStateAborting)) {
+      this._statesPool.set(
+        GameStateAborting,
+        new GameStateAborting(game, this)
+      );
+    }
+    return this._statesPool.get(GameStateAborting);
   }
 }
 

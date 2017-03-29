@@ -6,6 +6,7 @@ import app from "./app";
 import {
   EVENT_ALL_FRAGMENTS_ANCHORED,
   EVENT_PLAY,
+  EVENT_FORCE_END,
   EVENT_ROUND_TIMER_TICK,
   EVENT_ROUND_TIME_ENDED
 } from "./events";
@@ -56,8 +57,11 @@ class Game {
     this._view.initPlayPopup();
   }
 
-  initBackground() {
-    this._view.initBackground(Loader.resources.main.texture, Model.scale);
+  initView() {
+    this._view.init(Loader.resources.main.texture, Model.scale);
+    this._view.on(EVENT_FORCE_END, () => {
+      this._state.abortRound();
+    });
   }
 
   resetView() {
@@ -80,6 +84,11 @@ class Game {
     FragmentsManager.once(EVENT_ALL_FRAGMENTS_ANCHORED, () => {
       this.stopRound(true);
     });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  anchorAllFragments() {
+    FragmentsManager.anchorAllFragments();
   }
 
   startRound() {

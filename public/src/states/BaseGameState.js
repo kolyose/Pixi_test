@@ -17,5 +17,8 @@ export default class BaseGameState {
   stopRound(isWin) {}
 
   // eslint-disable-next-line
+  abortRound() {}
+
+  // eslint-disable-next-line
   onLoadComplete() {}
 }

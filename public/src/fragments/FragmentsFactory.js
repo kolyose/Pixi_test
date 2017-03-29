@@ -12,6 +12,7 @@ class FragmentsFactory {
     if (this._fragmentsPool.length) return this._fragmentsPool;
 
     const fragmentDimensions = Model.fragmentDimensions;
+    const scale = Model.scale;
     const rows = Model.rows;
     const columns = Model.columns;
     let fragmentId = 0;
@@ -29,6 +30,9 @@ class FragmentsFactory {
           fragmentDimensions.width,
           fragmentDimensions.height
         );
+
+        anchorPosition.x *= scale;
+        anchorPosition.y *= scale;
 
         const texture = txr.clone();
         texture.frame = frameRect;

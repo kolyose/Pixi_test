@@ -5,7 +5,6 @@ export default class GameStateInit extends BaseGameState {
     super.entry();
     this._game.initModel();
     this._game.initPopups();
-    // this._game.initBackground();
     this._game.applyState(this._statesFactory.getStateReadyToPlay(this._game));
   }
 }

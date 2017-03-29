@@ -1,5 +1,6 @@
 import { Sprite, EventEmitter } from "./../aliases";
-import TinkManager from "./../TinkManager";
+import TinkManager from "./../utils/TinkManager";
+import CharmManager from "./../utils/CharmManager";
 import { EVENT_FRAGMENT_ANCHORED } from "./../events";
 
 export default class Fragment extends EventEmitter {
@@ -36,6 +37,16 @@ export default class Fragment extends EventEmitter {
 
   makeUndraggable() {
     this._sprite.draggable = false;
+  }
+
+  anchor() {
+    this._state.anchor();
+  }
+
+  moveToAnchorPosition() {
+    CharmManager.slide(this._sprite, this._anchorPosition, () => {
+      this._state.anchorComplete();
+    });
   }
 
   dispatchAnchored() {
