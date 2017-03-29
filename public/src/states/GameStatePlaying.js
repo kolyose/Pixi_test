@@ -13,7 +13,7 @@ export default class GameStatePlaying extends BaseGameState {
   exit() {
     super.exit();
     this._game.stopRoundCountdown();
-    this._game.resetFragmentsManager();
+    this._game.resetFragments();
     this._game.resetView();
   }
 

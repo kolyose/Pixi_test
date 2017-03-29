@@ -32,6 +32,7 @@ class FragmentsManager extends EventEmitter {
   reset() {
     if (this._fragments) {
       this._fragments.forEach(fragment => {
+        fragment.removeListener(EVENT_FRAGMENT_ANCHORED);
         fragment.reset();
       });
     }

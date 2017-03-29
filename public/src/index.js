@@ -65,7 +65,7 @@ class Game {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  resetFragmentsManager() {
+  resetFragments() {
     FragmentsManager.removeListener(EVENT_ALL_FRAGMENTS_ANCHORED);
     FragmentsManager.reset();
   }

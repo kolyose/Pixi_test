@@ -10,7 +10,7 @@ class Model extends EventEmitter {
     /* TODO: put here and parse settings JSON */
     this._layoutSettings = undefined;
     this._fragmentsNumber = 12;
-    this._roundTime = 10; // in seconds
+    this._roundTime = 30; // in seconds
     this._timeRemaining = this._roundTime;
     this._deltaTime = 0;
     this._updateTimeRemaining = this._updateTimeRemaining.bind(this);
