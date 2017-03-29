@@ -5,13 +5,17 @@ export default class BaseFragmentState {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  reset() {}
-
-  // eslint-disable-next-line class-methods-use-this
   entry() {}
 
   // eslint-disable-next-line class-methods-use-this
   exit() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  activate() {}
+
+  reset() {
+    this._fragment.applyState(this._statesFactory.getStateInit(this._fragment));
+  }
 
   // eslint-disable-next-line class-methods-use-this
   toggleDrag() {}

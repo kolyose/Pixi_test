@@ -43,6 +43,7 @@ class FragmentsManager extends EventEmitter {
   set fragments(frags) {
     this._fragments = frags;
     this._fragments.forEach(fragment => {
+      fragment.activate();
       fragment.once(EVENT_FRAGMENT_ANCHORED, () => {
         this.anchoredFragments += 1;
         if (this.anchoredFragments === this.fragments.length) {

@@ -52,7 +52,7 @@ class FragmentsFactory {
 
   // eslint-disable-next-line
   initFragment(fragment) {
-    fragment.applyState(FragmentStatesFactory.getStateDraggable(fragment));
+    fragment.applyState(FragmentStatesFactory.getStateInit(fragment));
     return fragment;
   }
 }

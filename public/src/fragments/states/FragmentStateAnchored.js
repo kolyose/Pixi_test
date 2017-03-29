@@ -15,11 +15,9 @@ export default class FragmentStateAnchored extends BaseFragmentState {
     this._fragment.dispatchAnchored();
   }
 
-  reset() {
-    super.reset();
-    this._fragment.applyState(
-      this._statesFactory.getStateDraggable(this._fragment)
-    );
+  exit() {
+    super.exit();
+    app.ticker.remove(this._remainAnchored);
   }
 
   toggleDrag() {

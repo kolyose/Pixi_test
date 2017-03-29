@@ -8,7 +8,6 @@ export default class Fragment extends EventEmitter {
     this._id = id;
     this._sprite = new Sprite(texture);
     TinkManager.makeDraggable(this._sprite);
-    this._sprite.draggable = false;
     this._anchorPosition = anchorPosition;
     this._state = undefined;
   }
@@ -17,6 +16,10 @@ export default class Fragment extends EventEmitter {
     if (this._state) this._state.exit();
     this._state = newState;
     this._state.entry();
+  }
+
+  activate() {
+    this._state.activate();
   }
 
   reset() {
