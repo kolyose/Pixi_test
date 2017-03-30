@@ -8,19 +8,28 @@ import {
 class FragmentsManager extends EventEmitter {
   constructor() {
     super();
-
     this.anchoredFragments = 0;
 
     TinkManager.pointer.press = () => {
       if (!this._fragments || !this._fragments.length) return;
-
-      this._fragments.every(fragment => {
-        if (TinkManager.pointer.hitTestSprite(fragment.view)) {
+      /* this._fragments.every(fragment => {
+        if (TinkManager.dragSprite === fragment.view) {
           this.draggingFragment = fragment;
           this.draggingFragment.toggleDrag();
           return false;
         }
         return true;
+      });*/
+
+      TinkManager.getDragSpriteWhenFound().then(dragSprite => {
+        this._fragments.every(fragment => {
+          if (dragSprite === fragment.view) {
+            this.draggingFragment = fragment;
+            this.draggingFragment.toggleDrag();
+            return false;
+          }
+          return true;
+        });
       });
     };
 

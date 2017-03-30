@@ -9,8 +9,9 @@ export default class FragmentStateAnchored extends BaseFragmentState {
 
   entry() {
     super.entry();
-    this._fragment.makeUndraggable();
+    this._remainAnchored();
     app.ticker.add(this._remainAnchored);
+    this._fragment.makeUndraggable();
     this._fragment.dispatchAnchored();
   }
 

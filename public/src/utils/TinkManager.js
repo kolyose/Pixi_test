@@ -5,7 +5,6 @@ import app from "./../app";
 class TinkManager {
   constructor() {
     this._tink = new Tink(PIXI, app.view);
-    this._pointer = this._tink.makePointer();
 
     app.ticker.add(() => {
       this._tink.update();
@@ -31,9 +30,22 @@ class TinkManager {
     return this._tink.button(frames);
   }
 
+  getDragSpriteWhenFound() {
+    const pointer = this._pointer;
+    return new Promise((resolve, reject) => {
+      const checkForDragSprite = function() {
+        if (pointer.dragSprite) {
+          app.ticker.remove(checkForDragSprite);
+          resolve(pointer.dragSprite);
+        }
+      };
+      app.ticker.add(checkForDragSprite);
+    });
+  }
+
   get pointer() {
     if (!this._pointer) {
-      throw new Error("TinkManager should be initialized first!");
+      this._pointer = this._tink.makePointer();
     }
     return this._pointer;
   }
