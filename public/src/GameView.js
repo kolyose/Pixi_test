@@ -21,25 +21,29 @@ export default class GameView extends EventEmitter {
     this._stage.addChild(this._tfCountdown);
   }
 
-  init(texture, scale) {
-    const bg = new Sprite(texture);
-    bg.scale.set(scale);
-    this._stage.addChildAt(bg, 0);
-    const colorMatrix = new ColorMatrixFilter();
-    bg.filters = [colorMatrix];
-    colorMatrix.greyscale(0.1);
+  initBackground(texture, position) {
+    this._bg = new Sprite(texture);
+    this._bg.scale.set(this._scale);
+    this._bg.position.set(position.x, position.y);
+    this._stage.addChildAt(this._bg, 0);
 
+    const colorMatrix = new ColorMatrixFilter();
+    this._bg.filters = [colorMatrix];
+    colorMatrix.greyscale(0.1);
+  }
+
+  initAbortBtn() {
     const btnBg = new Graphics();
     btnBg.lineStyle(1, 0x0000ff, 1);
     btnBg.beginFill(0xcccccc);
     btnBg.drawRoundedRect(0, 0, 50, 25, 10);
     btnBg.endFill();
 
-    this._btn = TinkManager.createButton([btnBg.generateCanvasTexture()]);
-    this._btn.x = bg.width - this._btn.width;
-    this._stage.addChild(this._btn);
+    this._btnAbort = TinkManager.createButton([btnBg.generateCanvasTexture()]);
+    this._btnAbort.x = this._bg.width - this._btnAbort.width;
+    this._stage.addChild(this._btnAbort);
 
-    this._btn.release = () => {
+    this._btnAbort.release = () => {
       this.emit(EVENT_FORCE_END);
     };
   }
@@ -48,10 +52,10 @@ export default class GameView extends EventEmitter {
     this._tfCountdown.text = Math.round(time).toString();
   }
 
-  addFragments(fragments, scale) {
+  addFragments(fragments) {
     /* eslint-disable */
     fragments.forEach(fragment => {
-      fragment.view.scale.set(scale, scale);
+      fragment.view.scale.set(this._scale, this._scale);
       fragment.view.x = Math.random() * 500;
       fragment.view.y = Math.random() * 500;
       this._fragmentsContainer.addChild(fragment.view);
@@ -78,5 +82,9 @@ export default class GameView extends EventEmitter {
 
   hidePlayPopup() {
     this._playPopup.hide();
+  }
+
+  set scale(value) {
+    this._scale = value;
   }
 }

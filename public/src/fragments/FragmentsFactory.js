@@ -19,20 +19,22 @@ class FragmentsFactory {
 
     for (let i = 0; i < rows; i += 1) {
       for (let j = 0; j < columns; j += 1) {
-        const anchorPosition = {
+        const framePosition = {
           x: j * fragmentDimensions.width,
           y: i * fragmentDimensions.height
         };
 
         const frameRect = new Rectangle(
-          anchorPosition.x,
-          anchorPosition.y,
+          framePosition.x,
+          framePosition.y,
           fragmentDimensions.width,
           fragmentDimensions.height
         );
 
-        anchorPosition.x *= scale;
-        anchorPosition.y *= scale;
+        const anchorPosition = {
+          x: framePosition.x * scale + Model.bgPosition.x,
+          y: framePosition.y * scale + Model.bgPosition.y
+        };
 
         const texture = txr.clone();
         texture.frame = frameRect;

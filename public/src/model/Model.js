@@ -20,6 +20,9 @@ class Model extends EventEmitter {
     *    Factory method to init layout settings based on image dimentions
     */
   initLayoutSettingsByImageDimensions(imageDimensions, rendererDimensions) {
+    this._imageDimensions = imageDimensions;
+    this._rendererDimensions = rendererDimensions;
+
     if (imageDimensions.width > imageDimensions.height) {
       this._layoutSettings = new HorizontalLayoutSettings(
         imageDimensions,
@@ -82,6 +85,19 @@ class Model extends EventEmitter {
 
   get timeRemaining() {
     return this._timeRemaining;
+  }
+
+  get bgPosition() {
+    return {
+      x: Math.abs(
+        this._rendererDimensions.width -
+          this._imageDimensions.width * this.scale
+      ) / 2,
+      y: Math.abs(
+        this._rendererDimensions.height -
+          this._imageDimensions.height * this.scale
+      ) / 2
+    };
   }
 }
 

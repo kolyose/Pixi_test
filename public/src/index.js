@@ -58,7 +58,9 @@ class Game {
   }
 
   initView() {
-    this._view.init(Loader.resources.main.texture, Model.scale);
+    this._view.scale = Model.scale;
+    this._view.initBackground(Loader.resources.main.texture, Model.bgPosition);
+    this._view.initAbortBtn();
     this._view.on(EVENT_FORCE_END, () => {
       this._state.abortRound();
     });
