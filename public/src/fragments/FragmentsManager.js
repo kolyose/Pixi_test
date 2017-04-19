@@ -12,14 +12,18 @@ class FragmentsManager extends EventEmitter {
 
     TinkManager.pointer.press = () => {
       if (!this._fragments || !this._fragments.length) return;
+      /* this._fragments.every(fragment => {
+        if (TinkManager.dragSprite === fragment.view) {
+          this.draggingFragment = fragment;
+          this.draggingFragment.toggleDrag();
+          return false;
+        }
+        return true;
+      });*/
 
       TinkManager.getDragSpriteWhenFound().then(dragSprite => {
         this._fragments.every(fragment => {
           if (dragSprite === fragment.view) {
-            if (this.draggingFragment) {
-              this.draggingFragment.toggleDrag();
-            }
-
             this.draggingFragment = fragment;
             this.draggingFragment.toggleDrag();
             return false;
@@ -31,7 +35,6 @@ class FragmentsManager extends EventEmitter {
 
     TinkManager.pointer.release = () => {
       if (!this.draggingFragment) return;
-
       this.draggingFragment.toggleDrag();
       this.draggingFragment = null;
     };

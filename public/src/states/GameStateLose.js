@@ -4,7 +4,6 @@ import { MESSAGE_LOSE } from "./../localization";
 export default class GameStateLose extends BaseGameState {
   entry() {
     super.entry();
-    this._game.resetFragments();
     this._game.showPlayPopup(MESSAGE_LOSE);
   }
 
